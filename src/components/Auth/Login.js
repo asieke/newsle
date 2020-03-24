@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import useFormValidation from "./useFormValidation";
+import validateLogin from "./validateLogin";
+import firebase from "../../firebase/firebase";
 
 const INITIAL_STATE = {
   name: "",
@@ -9,10 +11,24 @@ const INITIAL_STATE = {
 };
 
 function Login(props) {
-  const { handleChange, handleSubmit, values } = useFormValidation(
-    INITIAL_STATE
-  );
+  const {
+    handleSubmit,
+    handleBlur,
+    handleChange,
+    values,
+    errors,
+    isSubmitting
+  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
+
   const [login, setLogin] = useState(false);
+
+  async function authenticateUser() {
+    const { name, email, password } = values;
+    const response = login
+      ? firebase.login(email, password)
+      : firebase.register(name, email, password);
+    console.log({ response });
+  }
 
   return (
     <div>
@@ -24,6 +40,7 @@ function Login(props) {
             placeholder="Your Name"
             autoComplete="off"
             onChange={handleChange}
+            onBlur={handleBlur}
             value={values.name}
             name="name"
           />
@@ -33,19 +50,29 @@ function Login(props) {
           placeholder="Your Email"
           autoComplete="off"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.email}
+          className={errors.email && "error-input"}
           name="email"
         />
+        {errors.email && <p className="error-text">{errors.email}</p>}
         <input
           type="password"
           placeholder="Choose a secure password"
           autoComplete="off"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={values.password}
+          className={errors.password && "error-input"}
           name="password"
         />
+        {errors.password && <p className="error-text">{errors.password}</p>}
         <div className="flex mt3">
-          <button type="submit" className="button pointer mr2">
+          <button
+            type="submit"
+            className="button pointer mr2"
+            disabled={isSubmitting}
+          >
             {login ? "login" : "create account"}
           </button>
           <StyledLink onClick={() => setLogin(prevLogin => !prevLogin)}>
