@@ -7,6 +7,8 @@ import FirebaseContext from "../../firebase/context";
 function LinkItem({ link, index, showCount, history }) {
   const { user, firebase } = React.useContext(FirebaseContext);
 
+  const postedByAuthUser = user && user.uid === link.postedBy.id;
+
   function handleVote() {
     if (!user) {
       history.push("/login");
@@ -23,6 +25,16 @@ function LinkItem({ link, index, showCount, history }) {
     }
   }
 
+  function handleDeleteLink() {
+    const linkRef = firebase.db.collection("links").doc(link.id);
+    linkRef
+      .delete()
+      .then(() => console.log(`Document with ID ${link.id} deleted`))
+      .catch(err => {
+        console.error("Error deleting document:", err);
+      });
+  }
+
   return (
     <div className="flex items-start mt2">
       <div className="flex items-center">
@@ -33,7 +45,9 @@ function LinkItem({ link, index, showCount, history }) {
       </div>
       <div className="ml1">
         <div>
-          {link.description}
+          <a className="black no-underline" href={link.url}>
+            {link.description}
+          </a>
           <span className="link"> ({getDomain(link.url)})</span>
         </div>
         <div className="f6 lh-copy gray">
@@ -44,6 +58,14 @@ function LinkItem({ link, index, showCount, history }) {
               ? `${link.comments.length} comments`
               : "discuss"}
           </Link>
+          {postedByAuthUser && (
+            <>
+              {" | "}
+              <span className="delete-button" onClick={handleDeleteLink}>
+                delete link
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
