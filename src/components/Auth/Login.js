@@ -3,6 +3,7 @@ import useFormValidation from "./useFormValidation";
 import validateLogin from "./validateLogin";
 import firebase from "../../firebase";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const INITIAL_STATE = {
   name: "",
@@ -49,27 +50,31 @@ function Login(props) {
             autoComplete="off"
           />
         )}
-        <input
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.email}
-          name="email"
-          type="email"
-          className={errors.email && "error-input"}
-          placeholder="Your email"
-          autoComplete="off"
-        />
-        {errors.email && <p className="error-text">{errors.email}</p>}
-        <input
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password}
-          className={errors.password && "error-input"}
-          name="password"
-          type="password"
-          placeholder="Choose a secure password"
-        />
-        {errors.password && <p className="error-text">{errors.password}</p>}
+        <Flex>
+          <input
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            name="email"
+            type="email"
+            className={errors.email && "error-input"}
+            placeholder="Your email"
+            autoComplete="off"
+          />
+          {errors.email && <p className="error-text">{errors.email}</p>}
+        </Flex>
+        <Flex>
+          <input
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            className={errors.password && "error-input"}
+            name="password"
+            type="password"
+            placeholder="Choose a secure password"
+          />
+          {errors.password && <p className="error-text">{errors.password}</p>}
+        </Flex>
         {firebaseError && <p className="error-text">{firebaseError}</p>}
         <div className="flex mt3">
           <button
@@ -95,5 +100,17 @@ function Login(props) {
     </div>
   );
 }
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+
+  input {
+    padding: 5px;
+    width: 300px;
+    margin-right: 10px;
+  }
+`;
 
 export default Login;
