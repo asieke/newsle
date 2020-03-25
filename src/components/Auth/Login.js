@@ -41,14 +41,16 @@ function Login(props) {
       <h2 className="mv3">{login ? "Login" : "Create Account"}</h2>
       <form onSubmit={handleSubmit} className="flex flex-column">
         {!login && (
-          <input
-            onChange={handleChange}
-            value={values.name}
-            name="name"
-            type="text"
-            placeholder="Your name"
-            autoComplete="off"
-          />
+          <Flex>
+            <input
+              onChange={handleChange}
+              value={values.name}
+              name="name"
+              type="text"
+              placeholder="Your name"
+              autoComplete="off"
+            />
+          </Flex>
         )}
         <Flex>
           <input
@@ -85,13 +87,9 @@ function Login(props) {
           >
             Submit
           </button>
-          <button
-            type="button"
-            className="pointer button"
-            onClick={() => setLogin(prevLogin => !prevLogin)}
-          >
+          <StyledSpan onClick={() => setLogin(prevLogin => !prevLogin)}>
             {login ? "need to create an account?" : "already have an account?"}
-          </button>
+          </StyledSpan>
         </div>
       </form>
       <div className="forgot-password">
@@ -111,6 +109,12 @@ const Flex = styled.div`
     width: 300px;
     margin-right: 10px;
   }
+`;
+
+const StyledSpan = styled.span`
+  cursor: pointer;
+  padding-top: 5px;
+  font-size: 12px;
 `;
 
 export default Login;
