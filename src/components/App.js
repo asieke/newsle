@@ -6,6 +6,7 @@ import ForgotPassword from "./Auth/ForgotPassword";
 import SearchLinks from "./Link/SearchLinks";
 import LinkList from "./Link/LinkList";
 import LinkDetail from "./Link/LinkDetail";
+import Account from "./Account";
 import Header from "./Header";
 import useAuth from "./Auth/useAuth";
 import firebase, { FirebaseContext } from "../firebase";
@@ -24,6 +25,7 @@ function App() {
               <Route path="/create" component={CreateLink} />
               <Route path="/login" component={Login} />
               <Route path="/forgot" component={ForgotPassword} />
+              <Route path="/my-account" component={Account} />
               <Route path="/search" component={SearchLinks} />
               <Route path="/top" component={LinkList} />
               <Route path="/new/:page" component={LinkList} />

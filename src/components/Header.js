@@ -35,7 +35,9 @@ function Header() {
       <div className="flex">
         {user ? (
           <>
-            <div className="header-name">{user.displayName}</div>
+            <NavLink to="/my-account" className="header-link">
+              {user.displayName}
+            </NavLink>
             <div className="divider">|</div>
             <div className="header-button" onClick={() => firebase.logout()}>
               logout

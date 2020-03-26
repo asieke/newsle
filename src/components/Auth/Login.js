@@ -20,6 +20,7 @@ function Login(props) {
     errors,
     isSubmitting
   } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
+
   const [login, setLogin] = React.useState(true);
   const [firebaseError, setFirebaseError] = React.useState(null);
 
