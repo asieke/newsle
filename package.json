@@ -5,7 +5,7 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.0",
     "@stripe/stripe-js": "^1.2.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "date-fns": "^1.30.1",
     "firebase": "^6.0.0",
     "firebase-admin": "^7.3.0",
